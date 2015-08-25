@@ -5,13 +5,13 @@
 		return;
 	}
 	
-	// URLQueryValues maps a string key to a list of values
-	var URLQueryValues = function() {
+	// urlQueryValues maps a string key to a list of values
+	var urlQueryValues = function() {
 		this.__data = {};
 	};
 	
-	URLQueryValues.prototype = {
-		constructor: URLQueryValues,
+	urlQueryValues.prototype = {
+		constructor: urlQueryValues,
 		
 		// get gets the first value associated with the given key.
 		// If there are no values associated with the key, get returns
@@ -61,10 +61,18 @@
 	};
 	
 	var chanxuehong = {
-		// ParseQuery parses the URL-encoded query string and returns a map listing the values specified for each key.
-		ParseQuery: function(query) {
-			var ret = new URLQueryValues();
-			if (typeof query !== "string") {
+		// parseQuery parses the URL-encoded query string and returns a map listing the values specified for each key.
+		// If the query is not specified, parseQuery parses from window.location.search.
+		parseQuery: function(query) {
+			var ret = new urlQueryValues();
+			
+			if (query === undefined) {
+				query = window.location.search;
+				if (query === "") {
+					return ret;
+				}
+				query = query.slice(1);
+			} else if (typeof query !== "string") {
 				return ret;
 			}
 			
@@ -78,7 +86,7 @@
 					value = decodeURIComponent(key.slice(j+1));
 					key = key.slice(0, j);
 				}
-				if (key === "") {
+				if (key === "") { // can empty?
 					continue;
 				}
 				key = decodeURIComponent(key);
