@@ -114,7 +114,7 @@
 			}
 
 			return ret;
-		},
+		}
 	};
 
 	window.chanxuehong = chanxuehong;
