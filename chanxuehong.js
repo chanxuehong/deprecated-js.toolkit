@@ -9,8 +9,9 @@
 	var urlQueryValues = function() {};
 
 	urlQueryValues.prototype = {
-		constructor: urlQueryValues,
 		__data: {},
+		
+		constructor: urlQueryValues,
 
 		// get gets the first value associated with the given key.
 		// If there are no values associated with the key, get returns
@@ -60,6 +61,23 @@
 	};
 
 	var chanxuehong = {
+		__alphaNumericArray: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+			"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+			"0","1","2","3","4","5","6","7","8","9"],
+		
+		// randomString generates a string with length len that only contains A-Z, a-z, 0-9 and then returns it.
+		// If the parameter len is not provided, the default value is 32. 
+		randomString: function(len) {
+			len = len || 32;
+			var charArr = this.__alphaNumericArray;
+			var charArrLen = charArr.length;
+			var str = "";
+			for (var i = 0; i < len; i++) {
+				str += charArr[Math.floor(Math.random() * charArrLen)];
+			}
+			return str;
+		},
+		
 		// parseQuery parses the URL-encoded query string and returns a map listing the values specified for each key.
 		// parseQuery always returns a non-null map containing all the valid query parameters found.
 		// If the query is not specified, parseQuery parses from window.location.search.
