@@ -6,10 +6,10 @@
 	}
 
 	// urlQueryValues.prototype maps a string key to a list of values
-	var urlQueryValues = function() {};
+	function urlQueryValues() {}
 
 	urlQueryValues.prototype = {
-		__data: {},
+		data: {}, // the map
 
 		constructor: urlQueryValues,
 
@@ -18,7 +18,7 @@
 		// the empty string. To access multiple values, use the map
 		// directly.
 		get: function(key) {
-			var values = this.__data[key];
+			var values = this.data[key];
 			if (values === undefined || values.length <= 0) {
 				return "";
 			}
@@ -26,24 +26,24 @@
 		},
 		// set sets the key to value. It replaces any existing values.
 		set: function(key, value) {
-			this.__data[key] = [value];
+			this.data[key] = [value];
 		},
 		// add adds the value to key. It appends to any existing values associated with key. 
 		add: function(key, value) {
-			var values = this.__data[key];
+			var values = this.data[key];
 			if (values === undefined) {
-				this.__data[key] = [value];
+				this.data[key] = [value];
 			} else {
 				values.push(value);
 			}
 		},
 		// del deletes the values associated with key.
 		del: function(key) {
-			delete this.__data[key];
+			delete this.data[key];
 		},
 		// encode encodes the values into “URL encoded” form ("bar=baz&foo=quux"). 
 		encode: function() {
-			var data = this.__data;
+			var data = this.data;
 			var str = "";
 			for (var k in data) {
 				var vs = data[k];
